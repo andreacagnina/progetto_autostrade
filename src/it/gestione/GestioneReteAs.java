@@ -1,5 +1,6 @@
 package it.gestione;
 
+
 import java.util.*;
 
 public class GestioneReteAs {
@@ -35,7 +36,7 @@ public class GestioneReteAs {
     public ArrayList<Autoveicolo> trovaAutoveicoli(int x){
         ArrayList<Autoveicolo> autoveicoli = new ArrayList<>();
 
-        for(Autoveicolo a : autoveicoli){
+        for(Autoveicolo a : this.autoveicoli){
             boolean menoDiXKm= true;
             
             for(Percorrenza p : percorrenze){
@@ -48,4 +49,39 @@ public class GestioneReteAs {
                 }
             } return autoveicoli;
             }
+
+    public Autoveicolo trovaAutoFrequente(int d1, int d2){
+        Map<Autoveicolo, Integer> conteggio = new HashMap<>();
+
+        for(Percorrenza p : percorrenze){
+            if(p.getData() >= d1 && p.getData()<= d2){
+                conteggio.put(p.getAutoveicolo(), conteggio.getOrDefault(p.getAutoveicolo(),0) + 1);
+            }
+        }
+
+        Autoveicolo autoMax = null;
+        int maxPercorrenze = 0;
+
+        for(Map.Entry<Autoveicolo, Integer> entry : conteggio.entrySet()){
+            if(entry.getValue() > maxPercorrenze){
+                maxPercorrenze = entry.getValue();
+                autoMax = entry.getKey();
+            }
+        }
+    return autoMax;
+    }
+
+    public ArrayList<Citta> cittaGettonate(){
+        Map<Citta, Integer> conteggio = new HashMap<>();
+
+    for(Percorrenza p : percorrenze){
+    conteggio.put(p.getTratta().getCittaArrivo(), conteggio.getOrDefault(p.getTratta().getCittaArrivo(), 0)+1);
+}
+List<Map.Entry<Citta, Integer>> list = new ArrayList<>(conteggio.entrySet());
+list.sort((entry1, entry2)-> entry2.getValue() - entry1.getValue());
+ArrayList<Citta> risultato = new ArrayList<>();
+for(Map.Entry<Citta, Integer> entry : list){
+risultato.add(entry.getKey());
+}return risultato;
+}
 }

@@ -15,4 +15,8 @@ public class Autoveicolo {
         return targa;
     }
 
+    public String toString(){
+        return "marca: " + marca + " cc: " + cilindrata + " targata: " + targa;
+    }
+
 }
